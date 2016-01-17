@@ -1,0 +1,54 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://spring.io/guides/gs-producing-web-service" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://spring.io/guides/gs-producing-web-service" targetNamespace="http://spring.io/guides/gs-producing-web-service">
+<wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://spring.io/guides/gs-producing-web-service">
+<xs:element name="synchUserRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="name" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="synchUserResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="result" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="result">
+<xs:sequence>
+<xs:element name="name" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="synchUserResponse">
+<wsdl:part element="tns:synchUserResponse" name="synchUserResponse"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="synchUserRequest">
+<wsdl:part element="tns:synchUserRequest" name="synchUserRequest"></wsdl:part>
+</wsdl:message>
+<wsdl:portType name="ArmapiPort">
+<wsdl:operation name="synchUser">
+<wsdl:input message="tns:synchUserRequest" name="synchUserRequest"></wsdl:input>
+<wsdl:output message="tns:synchUserResponse" name="synchUserResponse"></wsdl:output>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="ArmapiPortSoap11" type="tns:ArmapiPort">
+<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="synchUser">
+<soap:operation soapAction=""/>
+<wsdl:input name="synchUserRequest">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="synchUserResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="ArmapiPortService">
+<wsdl:port binding="tns:ArmapiPortSoap11" name="ArmapiPortSoap11">
+<soap:address location="http://localhost:8082/ws"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>
